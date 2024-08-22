@@ -818,7 +818,16 @@ class MarkerPrinter:
 
         markerLength = markerLength * MarkerPrinter.ptPerMeter
         markerSeparation = markerSeparation * MarkerPrinter.ptPerMeter
-        pageBorder = (pageBorder[0] * MarkerPrinter.ptPerMeter, pageBorder[1] * MarkerPrinter.ptPerMeter)
+        # pageBorder = (pageBorder[0] * MarkerPrinter.ptPerMeter, pageBorder[1] * MarkerPrinter.ptPerMeter)
+
+        a4_width = 0.210 * MarkerPrinter.ptPerMeter
+        a4_length = 0.297 * MarkerPrinter.ptPerMeter
+        boardSizeX = ((markerLength + markerSeparation) * chessboardSize[0] - markerSeparation)
+        boardSizeY = ((markerLength + markerSeparation) * chessboardSize[1] - markerSeparation)
+        pageBorderX = (a4_width - boardSizeX) / 2
+        pageBorderY = (a4_length - boardSizeY) / 2
+
+        pageBorder = (pageBorderX, pageBorderY)
 
         prevImage = None
         with tempfile.TemporaryDirectory() as tmpdirname:
@@ -868,7 +877,16 @@ class MarkerPrinter:
 
         markerLength = markerLength * MarkerPrinter.ptPerMeter
         markerSeparation = markerSeparation * MarkerPrinter.ptPerMeter
-        pageBorder = (pageBorder[0] * MarkerPrinter.ptPerMeter, pageBorder[1] * MarkerPrinter.ptPerMeter)
+        # pageBorder = (pageBorder[0] * MarkerPrinter.ptPerMeter, pageBorder[1] * MarkerPrinter.ptPerMeter)
+
+        a4_width = 0.210 * MarkerPrinter.ptPerMeter
+        a4_length = 0.297 * MarkerPrinter.ptPerMeter
+        boardSizeX = ((markerLength + markerSeparation) * chessboardSize[0] - markerSeparation)
+        boardSizeY = ((markerLength + markerSeparation) * chessboardSize[1] - markerSeparation)
+        pageBorderX = (a4_width - boardSizeX) / 2
+        pageBorderY = (a4_length - boardSizeY) / 2
+
+        pageBorder = (pageBorderX, pageBorderY)
 
         # Check
         path, nameExt = os.path.split(filePath)
