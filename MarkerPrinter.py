@@ -828,13 +828,15 @@ class MarkerPrinter:
                 chessboardSize[1] * markerLength + (chessboardSize[1] - 1) * markerSeparation + pageBorder[1] * 2) as surface:
                 context = cairo.Context(surface)
 
-                context.set_source_rgba(0.5, 0.5, 0.5, 1.0)
+                # context.set_source_rgba(0.5, 0.5, 0.5, 1.0)
+                context.set_source_rgba(0, 0, 0, 0)
                 context.rectangle(0, 0,
                     chessboardSize[0] * markerLength + (chessboardSize[0] - 1) * markerSeparation + pageBorder[0] * 2,
                     chessboardSize[1] * markerLength + (chessboardSize[1] - 1) * markerSeparation + pageBorder[1] * 2)
                 context.fill()
 
-                context.set_source_rgba(1.0, 1.0, 1.0, 1.0)
+                # context.set_source_rgba(1.0, 1.0, 1.0, 1.0)
+                context.set_source_rgba(0, 0, 0, 0)
                 context.rectangle(pageBorder[0], pageBorder[1],
                     chessboardSize[0] * markerLength + (chessboardSize[0] - 1) * markerSeparation,
                     chessboardSize[1] * markerLength + (chessboardSize[1] - 1) * markerSeparation)
@@ -886,13 +888,15 @@ class MarkerPrinter:
             chessboardSize[1] * markerLength + (chessboardSize[1] - 1) * markerSeparation + pageBorder[1] * 2) as surface:
             context = cairo.Context(surface)
 
-            context.set_source_rgba(0.5, 0.5, 0.5, 1.0)
+            # context.set_source_rgba(0.5, 0.5, 0.5, 1.0)
+            context.set_source_rgba(0, 0, 0, 0)
             context.rectangle(0, 0,
                 chessboardSize[0] * markerLength + (chessboardSize[0] - 1) * markerSeparation + pageBorder[0] * 2,
                 chessboardSize[1] * markerLength + (chessboardSize[1] - 1) * markerSeparation + pageBorder[1] * 2)
             context.fill()
 
-            context.set_source_rgba(1.0, 1.0, 1.0, 1.0)
+            # context.set_source_rgba(1.0, 1.0, 1.0, 1.0)
+            context.set_source_rgba(0, 0, 0, 0)
             context.rectangle(pageBorder[0], pageBorder[1],
                 chessboardSize[0] * markerLength + (chessboardSize[0] - 1) * markerSeparation,
                 chessboardSize[1] * markerLength + (chessboardSize[1] - 1) * markerSeparation)
