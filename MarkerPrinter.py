@@ -818,7 +818,7 @@ class MarkerPrinter:
 
         markerLength = markerLength * MarkerPrinter.ptPerMeter
         markerSeparation = markerSeparation * MarkerPrinter.ptPerMeter
-        # pageBorder = (pageBorder[0] * MarkerPrinter.ptPerMeter, pageBorder[1] * MarkerPrinter.ptPerMeter)
+        pageBorder = (pageBorder[0] * MarkerPrinter.ptPerMeter, pageBorder[1] * MarkerPrinter.ptPerMeter)
 
         a4_width = 0.210 * MarkerPrinter.ptPerMeter
         a4_length = 0.297 * MarkerPrinter.ptPerMeter
@@ -827,7 +827,7 @@ class MarkerPrinter:
         pageBorderX = (a4_width - boardSizeX) / 2
         pageBorderY = (a4_length - boardSizeY) / 2
 
-        pageBorder = (pageBorderX, pageBorderY)
+        # pageBorder = (pageBorderX, pageBorderY)
 
         prevImage = None
         with tempfile.TemporaryDirectory() as tmpdirname:
@@ -845,11 +845,14 @@ class MarkerPrinter:
                 context.fill()
 
                 # context.set_source_rgba(1.0, 1.0, 1.0, 1.0)
-                context.set_source_rgba(0, 0, 0, 0)
+                context.set_source_rgba(0, 0, 0, 1)
+                context.set_line_width(1)
+                # context.rectangle(pageBorderX - markerSeparation, pageBorderY - markerSeparation, boardSizeX + markerSeparation, boardSizeY + markerSeparation)
                 context.rectangle(pageBorder[0], pageBorder[1],
                     chessboardSize[0] * markerLength + (chessboardSize[0] - 1) * markerSeparation,
                     chessboardSize[1] * markerLength + (chessboardSize[1] - 1) * markerSeparation)
-                context.fill()
+                context.stroke()
+                # context.fill()
 
                 for bx in range(chessboardSize[0]):
                     for by in range(chessboardSize[1]):
@@ -886,6 +889,16 @@ class MarkerPrinter:
         pageBorderX = (a4_width - boardSizeX) / 2
         pageBorderY = (a4_length - boardSizeY) / 2
 
+        board_sep_meters = 0.015
+        board_sep = board_sep_meters * MarkerPrinter.ptPerMeter
+        num_boards_row = 4
+        num_boards_column = 1
+
+        boards_areaX = (boardSizeX + board_sep) * num_boards_column - board_sep
+        boards_areaY = (boardSizeY + board_sep) * num_boards_row - board_sep
+        pageBorderX = (a4_width - boards_areaX) / 2
+        pageBorderY = (a4_length - boards_areaY) / 2
+
         pageBorder = (pageBorderX, pageBorderY)
 
         # Check
@@ -902,39 +915,52 @@ class MarkerPrinter:
         # Draw
         with MarkerPrinter.surface[ext.upper()] (
             filePath,
-            chessboardSize[0] * markerLength + (chessboardSize[0] - 1) * markerSeparation + pageBorder[0] * 2,
-            chessboardSize[1] * markerLength + (chessboardSize[1] - 1) * markerSeparation + pageBorder[1] * 2) as surface:
+            # chessboardSize[0] * markerLength + (chessboardSize[0] - 1) * markerSeparation + pageBorder[0] * 2,
+            # chessboardSize[1] * markerLength + (chessboardSize[1] - 1) * markerSeparation + pageBorder[1] * 2) as surface:
+            boards_areaX + pageBorder[0] * 2,
+            boards_areaY + pageBorderY * 2) as surface:
             context = cairo.Context(surface)
 
             # context.set_source_rgba(0.5, 0.5, 0.5, 1.0)
             context.set_source_rgba(0, 0, 0, 0)
             context.rectangle(0, 0,
-                chessboardSize[0] * markerLength + (chessboardSize[0] - 1) * markerSeparation + pageBorder[0] * 2,
-                chessboardSize[1] * markerLength + (chessboardSize[1] - 1) * markerSeparation + pageBorder[1] * 2)
+                boards_areaX + pageBorder[0] * 2,
+                boards_areaY + pageBorder[1] * 2)
             context.fill()
 
             # context.set_source_rgba(1.0, 1.0, 1.0, 1.0)
-            context.set_source_rgba(0, 0, 0, 0)
-            context.rectangle(pageBorder[0], pageBorder[1],
-                chessboardSize[0] * markerLength + (chessboardSize[0] - 1) * markerSeparation,
-                chessboardSize[1] * markerLength + (chessboardSize[1] - 1) * markerSeparation)
-            context.fill()
+            # context.rectangle(pageBorder[0], pageBorder[1],
+            #     chessboardSize[0] * markerLength + (chessboardSize[0] - 1) * markerSeparation,
+            #     chessboardSize[1] * markerLength + (chessboardSize[1] - 1) * markerSeparation)
+            # context.fill()
 
-            for bx in range(chessboardSize[0]):
-                for by in range(chessboardSize[1]):
-                    MarkerPrinter.__DrawBlock(
-                        context = context,
-                        dictionary = dictionary,
-                        markerLength = markerLength,
-                        borderBits = borderBits,
-                        chessboardSize = chessboardSize,
-                        squareLength = markerLength + markerSeparation,
-                        firstMarkerID = firstMarker,
-                        blockX = bx,
-                        blockY = by,
-                        pageBorderX = pageBorder[0],
-                        pageBorderY = pageBorder[1],
-                        mode = "ARUCOGRID")
+            for row_index in range(num_boards_row):
+                for column_index in range(num_boards_column):
+                    board_borderX = pageBorderX + (boardSizeX + board_sep) * column_index
+                    board_borderY = pageBorderY + (boardSizeY + board_sep) * row_index
+                    firstMarker = (row_index + column_index) * chessboardSize[0] * chessboardSize[1]
+
+                    context.set_source_rgba(0, 0, 0, 1)
+                    context.set_line_width(1)
+                    context.rectangle(board_borderX - markerSeparation, board_borderY - markerSeparation,
+                                      boardSizeX + 2 * markerSeparation, boardSizeY + 2 * markerSeparation)
+                    context.stroke()
+
+                    for bx in range(chessboardSize[0]):
+                        for by in range(chessboardSize[1]):
+                            MarkerPrinter.__DrawBlock(
+                                context = context,
+                                dictionary = dictionary,
+                                markerLength = markerLength,
+                                borderBits = borderBits,
+                                chessboardSize = chessboardSize,
+                                squareLength = markerLength + markerSeparation,
+                                firstMarkerID = firstMarker,
+                                blockX = bx,
+                                blockY = by,
+                                pageBorderX = board_borderX,
+                                pageBorderY = board_borderY,
+                                mode = "ARUCOGRID")
 
         if(subSize is not None):
             subDivide = (\
@@ -969,9 +995,10 @@ class MarkerPrinter:
                         context.fill()
 
                         context.set_source_rgba(1.0, 1.0, 1.0, 1.0)
-                        context.rectangle(pageBorder[0], pageBorder[1],
-                            subChessboardSliceX[subXID+1] - subChessboardSliceX[subXID],
-                            subChessboardSliceY[subYID+1] - subChessboardSliceY[subYID])
+                        # context.rectangle(pageBorder[0], pageBorder[1],
+                        #     subChessboardSliceX[subXID+1] - subChessboardSliceX[subXID],
+                        #     subChessboardSliceY[subYID+1] - subChessboardSliceY[subYID])
+                        context.rectangle(pageBorderX, pageBorderY, boardSizeX + markerSeparation, boardSizeY + markerSeparation)
                         context.fill()
 
                         for bx in range(subChessboardBlockX[subXID+1] - subChessboardBlockX[subXID]):
