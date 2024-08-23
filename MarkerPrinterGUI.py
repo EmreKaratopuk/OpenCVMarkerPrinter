@@ -255,19 +255,19 @@ class MarkerPrinterGUI:
 
         self.arucoGridMarkerDictionaryStr = tk.StringVar()
         self.arucoGridMarkerMarkersXStr = tk.StringVar()
-        self.arucoGridMarkerMarkersXStr.set("16")
+        self.arucoGridMarkerMarkersXStr.set("3")
         self.arucoGridMarkerMarkersYStr = tk.StringVar()
-        self.arucoGridMarkerMarkersYStr.set("9")
+        self.arucoGridMarkerMarkersYStr.set("2")
         self.arucoGridMarkerMarkerLengthStr = tk.StringVar()
-        self.arucoGridMarkerMarkerLengthStr.set("0.07")
+        self.arucoGridMarkerMarkerLengthStr.set("0.025")
         self.arucoGridMarkerMarkerSeparationStr = tk.StringVar()
-        self.arucoGridMarkerMarkerSeparationStr.set("0.02")
+        self.arucoGridMarkerMarkerSeparationStr.set("0.005")
         self.arucoGridMarkerFirstMarkerStr = tk.StringVar()
         self.arucoGridMarkerFirstMarkerStr.set("0")
         self.arucoGridMarkerBorderBitsStr = tk.StringVar()
         self.arucoGridMarkerBorderBitsStr.set("1")
 
-        self.arucoGridMarkerDictionaryMenue = tk.OptionMenu(self.arucoGridMarkerUIFrame, self.arucoGridMarkerDictionaryStr, "DICT_ARUCO_ORIGINAL", command = self.OnSelectArucoGridMarkerDictionary)
+        self.arucoGridMarkerDictionaryMenue = tk.OptionMenu(self.arucoGridMarkerUIFrame, self.arucoGridMarkerDictionaryStr, "DICT_4X4_1000", command = self.OnSelectArucoGridMarkerDictionary)
         self.arucoGridMarkerDictionaryMenue.grid(row=1, column=0, sticky = tk.NSEW)
         tk.Entry(self.arucoGridMarkerUIFrame, textvariable=self.arucoGridMarkerMarkersXStr).grid(row=1, column=1, sticky = tk.NSEW)
         tk.Entry(self.arucoGridMarkerUIFrame, textvariable=self.arucoGridMarkerMarkersYStr).grid(row=1, column=2, sticky = tk.NSEW)
@@ -308,7 +308,7 @@ class MarkerPrinterGUI:
         for dictName in self.dictList:
             self.arucoGridMarkerDictionaryMenue['menu'].add_command(label=dictName, command=tk._setit(self.arucoGridMarkerDictionaryStr, dictName, self.OnSelectArucoGridMarkerDictionary))
 
-        self.OnSelectArucoGridMarkerDictionary("DICT_ARUCO_ORIGINAL")
+        self.OnSelectArucoGridMarkerDictionary("DICT_4X4_1000")
 
     def OnSelectArucoMarkerDictionary(self, pDictName):
         self.arucoMarkerDictionaryStr.set(pDictName)
