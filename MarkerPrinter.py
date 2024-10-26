@@ -630,7 +630,7 @@ class MarkerPrinter:
                 chessboardSize[1] * squareLength + pageBorder[1] * 2) as surface:
                 context = cairo.Context(surface)
 
-                context.set_source_rgba(0.5, 0.5, 0.5, 1.0)
+                context.set_source_rgba(0, 0, 0, 0)
                 context.rectangle(0, 0,
                     chessboardSize[0] * squareLength + pageBorder[0] * 2,
                     chessboardSize[1] * squareLength + pageBorder[1] * 2)
@@ -687,13 +687,13 @@ class MarkerPrinter:
             chessboardSize[1] * squareLength + pageBorder[1] * 2) as surface:
             context = cairo.Context(surface)
 
-            context.set_source_rgba(0.5, 0.5, 0.5, 1.0)
+            context.set_source_rgba(0, 0, 0, 0)
             context.rectangle(0, 0,
                 chessboardSize[0] * squareLength + pageBorder[0] * 2,
                 chessboardSize[1] * squareLength + pageBorder[1] * 2)
             context.fill()
 
-            context.set_source_rgba(1.0, 1.0, 1.0, 1.0)
+            context.set_source_rgba(0, 0, 0, 0)
             context.rectangle(pageBorder[0], pageBorder[1],
                 chessboardSize[0] * squareLength,
                 chessboardSize[1] * squareLength)
@@ -737,7 +737,7 @@ class MarkerPrinter:
                         subChessboardSliceY[subYID+1] - subChessboardSliceY[subYID] + pageBorder[1] * 2) as surface:
                         context = cairo.Context(surface)
 
-                        context.set_source_rgba(0.5, 0.5, 0.5, 1.0)
+                        context.set_source_rgba(0, 0, 0, 0)
                         context.rectangle(0, 0,
                             subChessboardSliceX[subXID+1] - subChessboardSliceX[subXID] + pageBorder[0] * 2,
                             subChessboardSliceY[subYID+1] - subChessboardSliceY[subYID] + pageBorder[1] * 2)
@@ -891,7 +891,7 @@ class MarkerPrinter:
 
         board_sep_meters = 0.015
         board_sep = board_sep_meters * MarkerPrinter.ptPerMeter
-        num_boards_row = 4
+        num_boards_row = 3
         num_boards_column = 1
 
         boards_areaX = (boardSizeX + board_sep) * num_boards_column - board_sep
@@ -938,7 +938,7 @@ class MarkerPrinter:
                 for column_index in range(num_boards_column):
                     board_borderX = pageBorderX + (boardSizeX + board_sep) * column_index
                     board_borderY = pageBorderY + (boardSizeY + board_sep) * row_index
-                    firstMarker = (row_index + column_index) * chessboardSize[0] * chessboardSize[1]
+                    boardFirstMarker = firstMarker + (row_index + column_index) * chessboardSize[0] * chessboardSize[1]
 
                     context.set_source_rgba(0, 0, 0, 1)
                     context.set_line_width(1)
@@ -955,7 +955,7 @@ class MarkerPrinter:
                                 borderBits = borderBits,
                                 chessboardSize = chessboardSize,
                                 squareLength = markerLength + markerSeparation,
-                                firstMarkerID = firstMarker,
+                                firstMarkerID = boardFirstMarker,
                                 blockX = bx,
                                 blockY = by,
                                 pageBorderX = board_borderX,
@@ -1010,7 +1010,7 @@ class MarkerPrinter:
                                     borderBits = borderBits,
                                     chessboardSize = chessboardSize,
                                     squareLength = markerLength + markerSeparation,
-                                    firstMarkerID = firstMarker,
+                                    firstMarkerID = boardFirstMarker,
                                     blockX = subChessboardBlockX[subXID] + bx,
                                     blockY = subChessboardBlockY[subYID] + by,
                                     originX = subChessboardBlockX[subXID],
