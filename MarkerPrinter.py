@@ -944,6 +944,12 @@ class MarkerPrinter:
                     board_borderY = pageBorderY + (boardSizeY + board_sep) * row_index
                     boardFirstMarker = firstMarker + (row_index + column_index) * chessboardSize[0] * chessboardSize[1]
 
+                    # Fill inside with white
+                    context.set_source_rgb(1, 1, 1)  # White color
+                    context.rectangle(board_borderX - markerSeparation, board_borderY - markerSeparation,
+                                      boardSizeX + 2 * markerSeparation, boardSizeY + 2 * markerSeparation)
+                    context.fill()
+
                     context.set_source_rgba(0, 0, 0, 1)
                     context.set_line_width(1)
                     context.rectangle(board_borderX - markerSeparation, board_borderY - markerSeparation,
