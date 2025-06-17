@@ -15,6 +15,10 @@ from cairosvg import svg2png
 import math
 import tempfile
 
+# PAPER_SIZE = (0.210, 0.297)  # A4
+# PAPER_SIZE = (0.297, 0.420)  # A3
+PAPER_SIZE = (0.420, 0.594)  # A2
+
 def SaveArucoDictBytesList(filePath = "arucoDictBytesList.npz"):
     import numpy as np
 
@@ -820,12 +824,12 @@ class MarkerPrinter:
         markerSeparation = markerSeparation * MarkerPrinter.ptPerMeter
         pageBorder = (pageBorder[0] * MarkerPrinter.ptPerMeter, pageBorder[1] * MarkerPrinter.ptPerMeter)
 
-        a4_width = 0.210 * MarkerPrinter.ptPerMeter
-        a4_length = 0.297 * MarkerPrinter.ptPerMeter
+        paper_width = PAPER_SIZE[0] * MarkerPrinter.ptPerMeter
+        paper_length = PAPER_SIZE[1] * MarkerPrinter.ptPerMeter
         boardSizeX = ((markerLength + markerSeparation) * chessboardSize[0] - markerSeparation)
         boardSizeY = ((markerLength + markerSeparation) * chessboardSize[1] - markerSeparation)
-        pageBorderX = (a4_width - boardSizeX) / 2
-        pageBorderY = (a4_length - boardSizeY) / 2
+        pageBorderX = (paper_width - boardSizeX) / 2
+        pageBorderY = (paper_length - boardSizeY) / 2
 
         # pageBorder = (pageBorderX, pageBorderY)
 
@@ -882,22 +886,22 @@ class MarkerPrinter:
         markerSeparation = markerSeparation * MarkerPrinter.ptPerMeter
         # pageBorder = (pageBorder[0] * MarkerPrinter.ptPerMeter, pageBorder[1] * MarkerPrinter.ptPerMeter)
 
-        a4_width = 0.210 * MarkerPrinter.ptPerMeter
-        a4_length = 0.297 * MarkerPrinter.ptPerMeter
+        paper_width = PAPER_SIZE[0] * MarkerPrinter.ptPerMeter
+        paper_length = PAPER_SIZE[1] * MarkerPrinter.ptPerMeter
         boardSizeX = ((markerLength + markerSeparation) * chessboardSize[0] - markerSeparation)
         boardSizeY = ((markerLength + markerSeparation) * chessboardSize[1] - markerSeparation)
-        pageBorderX = (a4_width - boardSizeX) / 2
-        pageBorderY = (a4_length - boardSizeY) / 2
+        pageBorderX = (paper_width - boardSizeX) / 2
+        pageBorderY = (paper_length - boardSizeY) / 2
 
         board_sep_meters = 0.015
         board_sep = board_sep_meters * MarkerPrinter.ptPerMeter
-        num_boards_row = 3
+        num_boards_row = 1
         num_boards_column = 1
 
         boards_areaX = (boardSizeX + board_sep) * num_boards_column - board_sep
         boards_areaY = (boardSizeY + board_sep) * num_boards_row - board_sep
-        pageBorderX = (a4_width - boards_areaX) / 2
-        pageBorderY = (a4_length - boards_areaY) / 2
+        pageBorderX = (paper_width - boards_areaX) / 2
+        pageBorderY = (paper_length - boards_areaY) / 2
 
         pageBorder = (pageBorderX, pageBorderY)
 
